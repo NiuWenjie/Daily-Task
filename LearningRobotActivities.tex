@@ -1,0 +1,50 @@
+\documentclass{article} 
+\author{Wenjie Niu}
+\title{Learning Robot Activities from First-Person Human Videos Using Convolutional Future Regression}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{booktabs}%三线表宏包
+\usepackage{indentfirst}%使section后首段缩进
+\begin{document} 
+%\twocolumn
+\maketitle
+\begin{figure}[H]
+\centering
+ \includegraphics[scale=0.5]{LearningRobot.png} 
+ \caption{Overview of our approach}  
+ \label{fig:LearningRobot}
+ \end{figure}
+As shown in Fig~\ref{fig:LearningRobot}, this regression network does not require activity labels or hand/object labels in videos for its training. The manipulation network (the last row) generates robot control commands given current robot joint state, current robot hand locations, and predicted future robot hand locations.\par
+\cite{Lee_2017_CVPR_Workshops}We employ two components for achieving the goal. The first component is the perception component that consists of two fully convolutional neural networks: 
+\begin{enumerate}
+\item an extended version of the Single Shot MultiBox Detector (SSD) for human hand detection and
+\item a future regression network to predict the intermediate scene representation corresponding to the future frame. The second component is the manipulation component that maps 2-D hand locations in the image coordinate to the actual motor control using fully connected layers.\par
+\end{enumerate}
+\begin{table}
+\centering
+\begin{tabular}{cccc}
+ \toprule
+ 	& \multicolumn{3}{c}{Evaluation} \\
+ \cmidrule{2-4}
+ 	Method & Precision & Recall & F-measure \\
+ \midrule
+Hand-crafted features & 0.30 ± 0.37 & 0.15 ± 0.19 & 0.20 ± 0.25 \\
+Hands only & 4.78 ± 3.70 & 5.06 ± 4.06 & 4.87 ± 3.81 \\
+SSD w/ future Annot. & 27.53 ± 23.36 & 9.09 ± 8.96 & 13.23 ± 12.62 \\
+Deep Regressor (ours): K=1 & 27.04 ± 16.50 & 21.71 ± 14.71 & 23.45 ± 14.99 \\
+Deep Regressor (ours): K=5 & 29.97 ± 15.37 & 23.89 ± 16.45 & 25.40 ± 15.51 \\
+Deep Regressor (ours): K=10 & 36.58 ± 16.91 & 28.78 ± 17.96 & 30.90 ± 17.02 \\
+\bottomrule
+\end{tabular}
+\caption{Evaluation of predicting 1-sec future hand locations}
+\label{Tab:experiment}
+\end{table}\par
+Table~\ref{Tab:experiment} shows quantitative results of our future hand prediction. Here, \emph{K} represents number of frames we used as an input for our regression network.We can clearly observe that our approach significantly outperforms all baselines, including the state-of-the-art object detector SSD modified for the hand prediction.\par
+\bibliographystyle{plain} 
+%\bibliography{LearningToScoreOlympicEvents}
+\begin{thebibliography}{99}
+\bibitem{Lee_2017_CVPR_Workshops} Lee, Jangwon and Ryoo, Michael S. \emph{Learning Robot Activities From First-Person Human Videos Using Convolutional Future Regression. The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops.} 2017.{\bf July}: 1,2
+\end{thebibliography}
+%\nocite{*}%将没有引用的参考文献也表示出来
+\end{document}
