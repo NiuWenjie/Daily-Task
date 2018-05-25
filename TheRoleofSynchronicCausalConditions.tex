@@ -1,15 +1,20 @@
-\documentclass{article} 
+\documentclass[twocolumn]{article}
+\bibliographystyle{IEEEtran}
+\usepackage{indentfirst}
+\usepackage{picinpar,graphicx}
+\usepackage{cite}
+\usepackage{float}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{fontspec}
+\usepackage[pagebackref=true,colorlinks,linkcolor=red,citecolor=green]{hyperref}
+%\DeclareMathOperator*{\argmax}{argmax}
+\setlength{\parindent}{2em}
 \author{Wenjie Niu}
 \title{The Role of Synchronic Causal Conditions in Visual Knowledge Learning}
-\usepackage{graphicx}
-\usepackage{geometry}
-\usepackage{float}
-%\usepackage{booktabs}%三线表宏包
-\usepackage{amsmath}
-\usepackage{indentfirst}%使section后首段缩进
-\begin{document} 
-\twocolumn
-\maketitle
+\begin{document}
+	\maketitle
+	\par
 \section{Diachronic and Synchronic Causal Conditions}
 \begin{figure}[H]
 \centering
@@ -23,7 +28,5 @@ In Figure~\ref{fig:Conditions} it is shown that there are 3 objects, A, B, and C
 The idea of “enabling” causal
 conditions has been investigated by Abelson in an earlier effort. If we think of it in terms of counterfactual function, then it is like “had it not been there, the diachronic cause would not have given rise to the effect.” Its counterfactual causal role is the same as that of the diachronic causal condition – “had the diachronic cause not been there, the effect would not have taken place.” In the following discussions we will not explicitly label DIA and SYN for the sake of succinctness but their respective
 roles will be obvious.\par
-\bibliographystyle{plain} 
 \bibliography{TheRoleofSynchronicCausalConditions}
-%\nocite{*}%将没有引用的参考文献也表示出来
-\end{document}
+\end{document} 
