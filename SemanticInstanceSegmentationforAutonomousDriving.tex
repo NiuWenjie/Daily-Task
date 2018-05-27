@@ -29,6 +29,7 @@ We test our loss function on the challenging Cityscapes dataset, a multi-class s
 with the ResNet-38 network. The same architecture, pretrained on Cityscapes semantic segmentation, is also adopted for our instance segmentation network. We train the model on the 2975 training images, resized to 768x384 and use Adam with learning rate of 1e-4 on a NVIDIA Titan X. With our loss we achieve competitive results on the Cityscapes leaderboard, see table~\ref{Tab:experiment}.\par
 \begin{table}
 \centering
+\caption{Segmentation results of best performing entries on the test set of the Cityscapes instance segmentation benchmark.}
 \begin{tabular}{ccccc}
  \toprule
 % \cmidrule{2-4}
@@ -41,7 +42,6 @@ with the ResNet-38 network. The same architecture, pretrained on Cityscapes sema
           Ours & 17.5 & 35.9  & 27.9   & 31.0  \\ 
 \bottomrule
 \end{tabular}
-\caption{Segmentation results of best performing entries on the test set of the Cityscapes instance segmentation benchmark.}
 \label{Tab:experiment}
 \end{table}
 \newpage
