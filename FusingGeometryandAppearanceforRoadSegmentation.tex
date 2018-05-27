@@ -1,0 +1,61 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\bibliographystyle{IEEEtran}
+\usepackage{graphicx}
+\usepackage{picinpar,graphicx}
+\usepackage{cite}
+\usepackage{indentfirst}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\begin{document}
+\title{Fusing Geometry and Appearance for Road Segmentation}
+\author{Wenjie Niu}
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   We propose a novel method for fusing geometric and appearance cues for road surface segmentation. Modeling colour cues using Gaussian mixtures allows the fusion to be performed optimally within a  Bayesian framework, avoiding ad hoc weights. Adaptation to different scene conditions is accomplished through nearest-neighbour appearance model selection over a dictionary of mixture models learned from
+ training data, and the thorny problem of selecting the number of components in each mixture is solved through a novel cross-validation approach. Quantitative evaluation reveals that the proposed fusion method signifi-cantly improves segmentation accuracy relative to a method that uses geometric cues alone.\par
+\end{abstract}
+
+
+\section{Analysis of Example images}
+Vehicle-mounted cameras can provide critical visual data to support assisted and autonomous driving as well as road condition assessment. An important initial task is to segment the portion of the image that projects from the road, as opposed to portions of the vehicle on which the camera is mounted, other vehicles, the sidewalk or shoulder, overpasses, etc. This task is challenging particularly for cameras
+for which pan/tilt parameters are variable and/or unknown,
+so that a region of interest cannot be pre-defined. Other
+complications include occlusions caused by other vehicles
+and variability in road appearance due to weather conditions
+(rain, snow, etc) - see Fig~\ref{fig:RoadWeatherCondition} for examples.\par
+\cite{Cheng_2017_ICCV_Workshops}Recent methods use either appearance cues or geometric cues to estimate the road surface, but not both. Unfortunately appearance cues are fallible since non-road surfaces (e.g., sidewalk, buildings, 
+ overpasses) can be made of material that is very similar to the road surface, and with fresh snow cover it can be difficult to distinguish the road surface from neighbouring regions that are also covered with snow. While geometric methods are not subject to these limitations, they can fail when the road geometry is obscured (e.g., due to snow), or less well-defined (e.g., in parking lots). \par
+ Moreover, geometric methods do not provide a means for excluding non-road objects such as vehicles or pedestrians. To address these limitations we propose here a novel probabilistic method for fusing both geometry and appearance cues and show that this leads to more reliable road segmentation.\par
+%-------------------------------------------------------------------------
+\begin{figure}[t]
+\begin{center}
+
+\includegraphics[scale=0.25]{RoadWeatherCondition.png}
+\end{center}
+   \caption{Example images from the road weather conditions dataset.}
+\label{fig:RoadWeatherCondition}
+\end{figure}
+
+\begin{table}
+\begin{center}
+\caption{Quantitative comparison (IOU for foreground) with SegNet on test set.}
+\begin{tabular}{|c|c|c|}
+\hline
+Method & Mean & Std. Err.\\
+\hline\hline
+Geometric & 43.8 & 2.7 \\
+Fusion (initial) & 48.6 & 2.9 \\
+Fusion (refined) & 50.3 & 3.1 \\
+SegNet (road) & 28.9 & 3.5 \\
+SegNet (pavement) & 10.0 & 2.1 \\
+SegNet (road + pavement) & 29.3 & 2.7 \\
+\hline
+\end{tabular}
+\end{center}
+\label{Tab:experiment}
+\end{table}
+Table~\ref{Tab:experiment} compares these results against SegNet. Wenoticed that SegNet sometimes confuses the road and pavement categories and therefore assess both of these individually as well as their union. SegNet achieves an average IOU of only 29.3, performing best when road and pavement categories are combined\cite{Almazan2016Road}.
+\bibliography{FusingGeometryandAppearanceforRoadSegmentation}
+\end{document}
