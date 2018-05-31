@@ -1,0 +1,65 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\bibliographystyle{IEEEtran}
+\usepackage{graphicx}
+\usepackage{picinpar,graphicx}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\begin{document}
+\title{Real-time hand grasp recognition using weakly supervised two-stage convolutional neural networks for understanding manipulation actions}
+\author{Wenjie Niu}
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   Understanding human hand usage is one of the richest information source to recognize human manipulation actions. Since humans use various tools during actions, grasp recognition gives important cues to figure out humans’ intention and tasks. Earlier studies analyzed grasps with positions of hand joints by attaching sensors, but since these types of sensors prevent humans from naturally conducting actions, visual approaches have been focused in recent years. Convolutional neural networks require a vast annotated dataset, but, to our knowledge, no human grasping dataset includes ground truth of hand regions. In this paper, we propose a grasp recognition method only with imagelevel labels by the weakly supervised learning framework. In addition, we split the grasp recognition process into two stages that are hand localization and grasp classification so as to speed up. Experimental results demonstrate that the proposed method outperforms existing methods and can perform in real-time.
+\end{abstract}
+
+
+\section{Introduction}
+Human action recognition has many applications in robot learning from demonstration and human-robotinteraction. Usually, humans use various types of hand grasp according to intention of the action and the kind of tools. Hence, human grasp recognition is a crucial key to understand human manipulation actions~\cite{Gupta2016Effectiveness}, and various methods~\cite{Cai2015A} of the grasp recognition have been explored based on the grasp taxonomy developed by Feix \emph{et al} \cite{Feix2016The}. However, there are several properties of grasping such as resemblance among different functional grasp types and occlusion of hands by grasped objects that make the grasp recognition difficult. Thus, in this work, the CNN framework is utilized to overcome these challenging aspects.
+However, a large well-annotated dataset is an important prerequisite to use the CNN framework, and to our knowledge, no human grasping dataset with ground truth of hand region has existed so far. Thus, we propose two-stage convolutional neural networks, where one CNN was trained as a
+hand localization network with weakly supervised learning framework and the other CNN was trained as a grasp classification network with patches around detected hand
+locations. The experimental results demonstrate that our method outperforms the existing methods and can be performed at more than 60 fps which is enough for real-time processing.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.16]{TheNetworkArchitecture.png}
+\end{center}
+   \caption{The network architecture and the data flow of our approach.}
+\label{fig:Architecture}
+\end{figure}
+
+\section{Architecture}
+The representative CNN architectures, such as AlexNet~\cite{Krizhevsky2012ImageNet} and VGG-16 network~\cite{Simonyan2014Very}, are comprised of two phases. First, the CNNs extract a feature map from an input image using convolutional layers, and then the class of an object in the image is determined by fully connected layers with the feature map. Since human grasping datasets do not include ground truth bounding boxes of hands, the weakly supervised learning framework is utilized to coarsely predict locations of grasp instances. For the sake of that, every fully connected layer is converted to the equivalent convolutional layer, and then the network produces a probability map of each grasp type. However, because hand grasp images in the videos of object manipulation contain few hands in each image and grasp instances rarely overlap each other,probability values peak exclusively at few locations. Hence, we change the fully convolutional network for grasp type recognition into a two-stage CNN so that classifying grasp type is performed only on the hand regions which are found by the weakly supervised learned hand localization network
+with non-maxima suppression. Because the information of feature map of the grasp classification
+network will be enough for judging the presence of hands, we modify the architecture so that the two networks
+share the feature map. Furthermore, the output channels of the convolutional layers in the class-determination
+phase are set to 128. The overall network architecture of proposed method is shown in Fig~\ref{fig:Architecture}.
+\section{Experimental results} 
+The performance of each classification method is represented in terms of mean values of average precision, accuracy, and F1-measure of all classes and summarized in Table~\ref{Tab:Experiment}.
+
+\begin{table}
+\begin{center}
+\caption{Summary of the classification results}
+\begin{tabular}{ccc}
+\toprule
+network type & AlexNet-based & VGG-16-based \\
+\midrule
+mAP (\%) & 93.16 & 95.46 \\
+mACC (\%) & 99.86 & 99.96 \\
+mF1 (\%) & 98.51 & 99.57 \\
+runtime (ms) & 15.93 & 88.80 \\
+\bottomrule
+\end{tabular}
+\label{Tab:Experiment}
+\end{center}
+\end{table}
+
+
+We propose a method for recognizing hand grasps automatically by using a two-stage CNN architecture. Our method improves recognition performance compared with existing methods, and it is verified that our AlexNet-based network can be used in real-time applications. This work is actually an on-going work, thus there are many future works. More experiments should be carried out on the various grasping datasets. In addition, we will investigate the ways of incorporating temporal information and extending to recognition of manipulation actions.
+
+\bibliography{Real-timeHandGraspRecognition}
+\end{document}
