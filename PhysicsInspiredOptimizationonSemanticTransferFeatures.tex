@@ -1,0 +1,73 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\bibliographystyle{plain}
+\usepackage{graphicx}
+\usepackage{picinpar,graphicx}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\begin{document}
+\title{Physics Inspired Optimization on Semantic Transfer Features: An Alternative Method for Room Layout Estimation}
+\author{Wenjie Niu}
+\maketitle
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+   In this paper, we propose an alternative method to estimate
+room layouts of cluttered indoor scenes. This method
+enjoys the benefits of two novel techniques. The first one
+is semantic transfer (ST), which is: (1) a formulation to
+integrate the relationship between scene clutter and room
+layout into convolutional neural networks; (2) an architecture
+that can be end-to-end trained; (3) a practical strategy
+to initialize weights for very deep networks under unbalanced
+training data distribution. ST allows us to extract
+highly robust features under various circumstances,
+and in order to address the computation redundance hidden
+in these features we develop a principled and efficient inference
+scheme named physics inspired optimization (PIO).
+PIO’s basic idea is to formulate some phenomena observed
+in ST features into mechanics concepts. Evaluations on
+public datasets LSUN and Hedau show that the proposed
+method is more accurate than state-of-the-art methods.~\cite{Zhao_2017_CVPR}
+\end{abstract}
+
+
+\section{Introduction}
+Given an input RGB image, a room layout estimation
+algorithm should output all the wall-floor, wall-wall, and
+wall-ceiling edges (depicted by Fig ~\ref{fig:overview}). This is a fundamental
+indoor scene understanding task as it can provide
+a strong prior for other tasks like depth recovery from a
+single RGB image ~\cite{Eigen2014Depth}~\cite{Eigen_2014_CVPR} or indoor object pose estimation
+~\cite{Song2014Sliding}~\cite{Gupta2015Aligning}~\cite{Song_2016_CVPR}. Besides, the room layout itself provides a highlevel
+representation of an indoor scene for emerging applications
+like intelligent robots and augmented reality. This
+problem draws constant attention since the publication of
+the seminal work~\cite{Hedau2010Recovering}, and there are two lines of followers:
+(1) As the upper part of Fig~\ref{fig:overview}  shows, conventional methods
+follow a proposing-ranking scheme. Typically, the proposing part consists of three sub-modules as edge detection,
+vanishing point voting and ray sampling. With
+hand-crafted features and structured inference techniques,
+the ranking part outputs the best layout proposal, sometimes
+along with a representation of the clutter.
+(2) Recent methods~\cite{Mallya2015Learning}~\cite{Dasgupta2016DeLay}~\cite{Ren2016A} achieve dramatic performance
+improvements via features produced by fully convolutional
+networks (FCNs). ~\cite{Mallya2015Learning}~\cite{Ren2016A} still follow the traditional
+proposing-ranking scheme. ~\cite{Dasgupta2016DeLay} is a proposal-free
+solution in which all those steps about proposal generation
+are eliminated. And instead of proposal ranking, in ~\cite{Dasgupta2016DeLay} inference
+is achieved through an optimization module.\par
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.22]{Above.png}
+\end{center}
+   \caption{Above is the overview of conventional methods. Below is the overview of our method. Better viewed electronically.}
+\label{fig:overview}
+\end{figure}
+
+\bibliography{PhysicsInspiredOptimizationonSemanticTransferFeatures}
+\end{document}
