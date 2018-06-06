@@ -1,0 +1,116 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{picinpar,graphicx}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Embodied Question Answering}
+
+\author{Wenjie Niu\\\\ June 6,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+  \cite{Das_2018_CVPR}We present a new AI task-– \textbf{Embodied Questi-n Answering}
+(EmbodiedQA) – where an agent is spawned at a random
+location in a 3D environment and asked a question (`What
+color is the car?'). In order to answer, the agent must first intelligently
+navigate to explore the environment, gather necessary
+visual information through first-person (egocentric)
+vision, and then answer the question (`orange').\par
+EmbodiedQA requires a range of AI skills – language understanding,
+visual recognition, active perception, goaldriven
+navigation, commonsense reasoning, long-term
+memory, and grounding language into actions. In this work,
+we develop a dataset of questions and answers in House3D
+environments~\cite{Wu2018Building}, evaluation metrics, and a hierarchical
+model trained with imitation and reinforcement learning.\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Our long-term goal is to build intelligent agents that can
+perceive their environment (through vision, audition, or
+other sensors), communicate (i.e., hold a natural language
+dialog grounded in the environment), and act (e.g. aid humans
+by executing API calls or commands in a virtual or
+embodied environment). In addition to being a fundamental
+scientific goal in artificial intelligence (AI), even a small
+advance towards such intelligent systems can fundamentally
+change our lives – from assistive dialog agents for the visually
+impaired, to natural-language interaction with selfdriving
+cars, in-home robots, and personal assistants.\par
+As a step towards goal-driven agents that can perceive, communicate,
+and execute actions, we present a new AI task-–\textbf{Embodied Question Answering}(EmbodiedQA) – along with a dataset of questions in virtual environments, evaluation
+metrics, and a deep reinforcement learning (RL) model.
+Concretely, the EmbodiedQA task is illustrated in Fig.~\ref{fig:EmbodiedQA} –
+an agent is spawned at a random location in an environment
+(a house or building) and asked a question (e.g. `What color
+is the car?'). The agent perceives its environment through
+first-person egocentric vision and can perform a few atomic
+actions (move-forward, turn, strafe, etc.). The goal of the
+agent is to intelligently navigate the environment and gather
+visual information necessary for answering the question.
+
+\begin{figure}[!htb]
+\begin{center}
+   \includegraphics[width=1\linewidth]{EmbodiedQA.png}
+\end{center}
+   \caption{Embodied Question Answering – EmbodiedQA– tasks
+agents with navigating rich 3D environments in order to answer
+questions. These agents must jointly learn language understanding,
+visual reasoning, and goal-driven navigation to succeed.}
+\label{fig:EmbodiedQA}
+\end{figure}
+
+\section{Interactive Environments} 
+There are several interactive
+environments commonly used in the community, ranging
+from simple 2D grid-worlds (e.g. XWORLD~\cite{Haonan2017}), to 3D
+game-like environments with limited realism (e.g. DeepMind
+Lab~\cite{Charles2016Lab} or Doom~\cite{Chaplot2017Gated}), to more complex, realistic
+environments (e.g. AI2-THOR~\cite{Zhu2017Visual}, Matterport3D~\cite{Anderson2017Vision},
+Stanford 2D-3D-S~\cite{Armeni2017Joint}). While realistic environments provide
+rich representations of the world, most consist of only
+a handful of environments due to the high difficulty of their
+creation. On the other hand, large sets of synthetic environments
+can be programmatically generated; however,
+they typically lack realism (either in appearance or arrangement).
+In this work, we use the House3D~\cite{Wu2018Building} environment as
+it strikes a useful middle-ground between being sufficiently
+realistic and providing access to a large and diverse set of
+room layouts and object categories. 
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{EmbodiedQuestionAnswering}
+}
+
+\end{document}
