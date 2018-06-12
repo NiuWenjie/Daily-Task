@@ -1,0 +1,94 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Learning Face Age Progression: A Pyramid Architecture of GANs}
+
+\author{Wenjie Niu\\\\ June 12,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+  \cite{Yang_2018_CVPR}The two underlying requirements of face age progression,
+i.e. aging accuracy and identity permanence, are not
+well studied in the literature. In this paper, we present a
+novel generative adversarial network based approach. It
+separately models the constraints for the intrinsic subjectspecific
+characteristics and the age-specific facial changes
+with respect to the elapsed time, ensuring that the generated
+faces present desired aging effects while simultaneously
+keeping personalized properties stable. Further, to
+generate more lifelike facial details, high-level age-specific
+features conveyed by the synthesized face are estimated by
+a pyramidal adversarial discriminator at multiple scales,
+which simulates the aging effects in a finer manner. The
+proposed method is applicable to diverse face samples in
+the presence of variations in pose, expression, makeup, etc.,
+and remarkably vivid aging effects are achieved. Both visual
+fidelity and quantitative evaluations show that the approach
+advances the state-of-the-art.\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Age progression is the process of aesthetically rendering
+a given face image to present the effects of aging. It is often
+used in entertainment industry and forensics, e.g., forecasting
+facial appearances of young children when they grow up
+or generating contemporary photos for missing individuals.\par
+The intrinsic complexity of physical aging, the interferences
+caused by other factors (e.g., PIE variations), and
+shortage of labeled aging data collectively make face age
+progression a rather difficult problem. The last few years
+have witnessed significant efforts tackling this issue, where
+aging accuracy and identity permanence are commonly
+regarded as the two underlying premises of its success~\cite{Jinli2010A}\cite{Yang2016Face}\cite{Shu2015Personalized}\cite{Lanitis2009Evaluating}. The early attempts were mainly based on
+the skin’s anatomical structure and they mechanically simulated
+the profile growth and facial muscle changes w.r.t.
+the elapsed time~\cite{Todd1980The}\cite{Ramanathan2008Modeling}. These methods provided the first insight into face aging synthesis. However, they generally
+worked in a complex manner, making it difficult to
+generalize. Data-driven approaches followed, where face
+age progression was primarily carried out by applying the
+prototype of aging details to test faces~\cite{Kemelmacher2014Illumination}\cite{Jinli2010A}, or by modeling
+the dependency between longitudinal facial changes
+and corresponding ages~\cite{Suo2012A}\cite{Wang2012Combining}\cite{Park2010Age}. Although obvious
+signs of aging were synthesized well, their aging functions
+usually could not formulate the complex aging mechanism
+accurately enough,shown as Fig~\ref{fig:results}, limiting the diversity of aging patterns.\par
+\begin{figure}[!htb]
+\begin{center}
+   \includegraphics[width=1\linewidth]{AgingSimulation.png}
+\end{center}
+   \caption{Demonstration of our aging simulation results (images
+in the first column are input faces of two subjects).}
+\label{fig:results}
+\end{figure}
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{LearningFaceAgeProgression}
+}
+
+\end{document}
