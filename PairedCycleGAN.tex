@@ -1,0 +1,110 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{PairedCycleGAN: Asymmetric Style Transfer
+for Applying and Removing Makeup}
+
+\author{Wenjie Niu\\\\ June 14,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+This paper introduces an automatic method for editing
+a portrait photo so that the subject appears to be wearing
+makeup in the style of another person in a reference
+photo. Our unsupervised learning approach relies on a
+new framework of cycle-consistent generative adversarial
+networks. Different from the image domain transfer problem,
+our style transfer problem involves two asymmetric
+functions: a forward function encodes example-based style
+transfer, whereas a backward function removes the style. We
+construct two coupled networks to implement these functions
+– one that transfers makeup style and a second that
+can remove makeup – such that the output of their successive
+application to an input photo will match the input. The
+learned style network can then quickly apply an arbitrary
+makeup style to an arbitrary photo. We demonstrate the effectiveness
+on a broad range of portraits and styles.\cite{Chang_2018_CVPR}\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Digital photo manipulation now plays a central role
+in portraiture. Professional tools allow photographers to
+adjust lighting, remove blemishes, or move wisps of hair.
+Whimsical applications let novices add cartoon elements
+like a party hat or clown nose, or to turn photos into
+drawings and paintings. Some tools like Taaz~\cite{Taaz-web} and
+PortraitPro~\cite{Portrait-web} can digitally add makeup to a person in a
+photo, but the styles are limited to a collection of preset
+configurations and/or a set of parameters that adjust specific
+features like lip color.\par
+This paper introduces a way to digitally add makeup to a
+photo of a person, where the style of the makeup is provided
+in an example photo of a different person (Figure~\ref{fig:photos}). One
+challenge is that it is difficult to acquire a dataset of photo
+triplets from which to learn: the source photo, the reference
+makeup photo, and the ground truth output (which preserves
+identity of the source and style of the reference). Previous
+work on style transfer avoids the need for such a training
+set by defining the style and content loss functions based on
+deep features trained by neural networks~\cite{Guo2009Digital},\cite{LiaoYYHK17},\cite{Liu2016Makeup}. While those approaches can produce good results for stylization
+of imagery in general, they do not work well for adding
+various makeup styles to faces. A second challenge, specific
+to our makeup problem, is that people are highly sensitive
+to visual artifacts in rendered faces. A potential solution
+is to restrict the stylization range so as to define a specific
+color transformation space (such as affine transformations),
+or so as to preserve edges~\cite{Liu2016Makeup},\cite{LuanPSB17},\cite{LiaoYYHK17}. Unfortunately, this
+approach limits the range of makeup, because many styles
+include features that would violate the edge preservation
+property such as elongated eyelashes or dark eye liner.\par
+Inspired by recent successful photorealistic style transfer
+based on generative adversarial networks (GANs), we
+take an unsupervised learning approach that builds on the
+CycleGAN architecture of Zhu \emph{et al.}\cite{ZhuPIE17}. CycleGAN can
+transfer images between two domains by training on two
+sets of images, one from each domain. For our application, CycleGAN could in principle learn to apply a general
+make-you-look-good makeup to a no-makeup face, but it
+would not replicate a specific example makeup style.
+
+\begin{figure}[!htb]
+\begin{center}
+   \includegraphics[width=1\linewidth]{SourcePhoto.png}
+\end{center}
+   \caption{Three source photos (top row) are each modified to
+match makeup styles in three reference photos (left column) to
+produce nine different outputs (3 $\times$ 3 lower right).}
+\label{fig:photos}
+\end{figure}
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{PairedCycleGAN}
+}
+
+\end{document}
