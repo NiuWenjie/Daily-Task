@@ -1,0 +1,97 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{GANerated Hands for Real-Time 3D Hand Tracking from Monocular RGB}
+
+\author{Wenjie Niu\\\\ June 16,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+We address the highly challenging problem of real-time
+3D hand tracking based on a monocular RGB-only sequence.
+Our tracking method combines a convolutional
+neural network with a kinematic 3D hand model, such that it
+generalizes well to unseen data, is robust to occlusions and
+varying camera viewpoints, and leads to anatomically plausible
+as well as temporally smooth hand motions. For training
+our CNN we propose a novel approach for the synthetic
+generation of training data that is based on a geometrically
+consistent image-to-image translation network. To be more
+specific, we use a neural network that translates synthetic
+images to “real” images, such that the so-generated images
+follow the same statistical distribution as real-world
+hand images. For training this translation network we combine
+an adversarial loss and a cycle-consistency loss with
+a geometric consistency loss in order to preserve geometric
+properties (such as hand pose) during translation. We
+demonstrate that our hand tracking system outperforms the
+current state-of-the-art on challenging RGB-only footage.\cite{Mueller_2018_CVPR}\par
+\end{abstract}
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{3Dhand.png}
+\end{center}
+   \caption{ We present an approach for real-time 3D hand tracking from monocular RGB-only input. Our method is compatible
+with unconstrained video input such as community videos from YouTube (left), and robust to occlusions (center-left). We
+show real-time 3D hand tracking results using an off-the-shelf RGB webcam in unconstrained setups (center-right, right).}
+\label{fig:hand}
+\end{figure*}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Estimating the 3D pose of the hand is a long-standing
+goal in computer vision with many applications such as in
+virtual/augmented reality (VR/AR) \cite{Lee2009Multithreaded},\cite{Piumsomboon2013UGA} and human–
+computer interaction \cite{Feit2015Investigating},\cite{Markussen2014Vulture}. While there is a large body
+of existing works that consider marker-free image-based
+hand tracking or pose estimation, many of them require
+depth cameras \cite{Sharp2015Accurate},\cite{Taylor2016Efficient},\cite{Srinath_2016_CVPR} or multi-view 
+setups \cite{Sridhar2014Real},\cite{Ballan2012Motion}. However, in many applications these
+requirements are unfavorable since such hardware is less
+ubiquitous, more expensive, and does not work in all scenes.\par
+In contrast, we address these issues and propose a new
+algorithm for real-time skeletal 3D hand tracking with a
+single color camera that is robust under object occlusion
+and clutter. Recent developments that consider RGB-only
+markerless hand tracking come with clear limitations.
+For example, the approach by Simon et al.
+achieves the estimation of 3D joint locations within a multiview
+setup; however in the monocular setting only 2D joint
+locations are estimated. \par
+In Fig.~\ref{fig:hand} we demonstrate that our method
+is also compatible with community or vintage RGB video.
+In particular, we show 3D hand tracking in YouTube videos,
+which demonstrates the generalization of our method.\par
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{GANeratedHands}
+}
+
+\end{document}
