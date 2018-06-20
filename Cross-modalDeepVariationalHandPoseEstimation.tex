@@ -1,0 +1,148 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Cross-modal Deep Variational Hand Pose Estimation}
+
+\author{Wenjie Niu\\\\ June 20,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+The human hand moves in complex and highdimensional
+ways, making estimation of 3D hand pose configurations
+from images alone a challenging task. In this
+work we propose a method to learn a statistical hand model
+represented by a cross-modal trained latent space via a generative
+deep neural network. We derive an objective function
+from the variational lower bound of the VAE framework
+and jointly optimize the resulting cross-modal KLdivergence
+and the posterior reconstruction objective, naturally
+admitting a training regime that leads to a coherent
+latent space across multiple modalities such as RGB images,
+2D keypoint detections or 3D hand configurations.
+Additionally, it grants a straightforward way of using semisupervision.
+This latent space can be directly used to estimate
+3D hand poses from RGB images, outperforming the
+state-of-the art in different settings. Furthermore, we show
+that our proposed method can be used without changes
+on depth images and performs comparably to specialized
+methods. Finally, the model is fully generative and can
+synthesize consistent pairs of hand configurations across
+modalities. We evaluate our method on both RGB and depth
+datasets and analyze the latent space qualitatively.\cite{Spurr_2018_CVPR}\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Hands are of central importance to humans in manipulating
+the physical world and in communicating with each
+other. Recovering the spatial configuration of hands from
+natural images therefore has many important applications
+in AR/VR, robotics, rehabilitation and HCI. Much work exists
+that tracks articulated hands in streams of depth images,
+or that estimates hand pose~\cite{Oberweger2017DeepPrior},\cite{Oberweger2015Hands},\cite{Tang_2014_Latent},\cite{Wan2016Hand} from individual
+depth frames. However, estimating the full 3D hand
+pose from monocular RGB images only is a more challenging
+task due to the manual dexterity, symmetries and selfsimilarities
+of human hands as well as difficulties stemming
+from occlusions, varying lighting conditions and lack of accurate
+scale estimates. Compared to depth images the RGB
+case is less well studied.\par
+Recent work relying solely on RGB images~\cite{T_2017_L} proposes
+a deep learning architecture that decomposes the task
+into several substeps, demonstrating initial feasibility and
+providing a public dataset for comparison. The proposed
+architecture is specifically designed for the monocular case
+and splits the task into hand and 2D keypoint detection followed
+by a 2D-3D lifting step but incorporates no explicit
+hand model. Our work is also concerned with the estimation
+of 3D joint-angle configurations of human hands from RGB
+images but learns a cross-modal, statistical hand model.
+This is attained via learning of a latent representation that
+embeds sample points from multiple data sources such as
+2D keypoints, images and 3D hand poses. Samples from
+this latent space can then be reconstructed by independent
+decoders to produce consistent and physically plausible 2D
+or 3D joint predictions and even RGB images.\par
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{LatentSpace.png}
+\end{center}
+   \caption{\textbf{Cross-modal latent space.} t-SNE visualization
+of 500 input samples of different modalities in the latent
+space. Embeddings of RGB images are shown in blue, embeddings
+of 3D joint configurations in green. Hand poses
+are decoded samples drawn from the latent space. Embedding
+does not cluster by modality, showing that there is a
+unified latent space. The posterior across different modalities
+can be estimated by sampling from this manifold.}
+\label{fig:Space}
+\end{figure}
+
+In this work we propose to learn a single, unified latent
+space via an extension of the VAE framework. We provide a
+derivation of the variational lower bound that permits training
+of a single latent space using multiple modalities, where
+similar input poses are embedded close to each other independent
+of the input modality. Fig.~\ref{fig:Space} visualizes this learned
+unified latent space for two modalities (RGB \& 3D). We
+focus on RGB images and hence test the architecture on
+different combinations of modalities where the goal is to
+produce 3D hand poses as output. At the same time, the
+VAE framework naturally allows to generate samples consistently
+in any modality.\par
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{Architeture.png}
+\end{center}
+   \caption{\textbf{Schematic overview of our architecture.}Left: a cross-modal latent space z is learned by training pairs of encoder
+and decoder q, p networks across multiple modalities (e.g., RGB images to 3D hand poses). Auxilliary encoder-decoder pairs
+help in regularizing the latent space. Right: The approach allows to embed input samples of one set of modalities (here:
+RGB, 3D) and to produce consistent and plausible posterior estimates in several different modalities (RGB, 2D and 3D).}
+\label{fig:Architeture}
+\end{figure*}
+
+We deploy the VAE framework that admits cross-modal
+training of such a hand pose latent space by using various
+sources of data representation, even if stemming from different
+data sets both in terms of input and output. Our crossmodal
+training scheme, illustrated in Fig.~\ref{fig:Architeture}, learns to embed
+hand pose data from different modalities and to reconstruct
+them either in the same or in a different modality.\par
+Fig.~\ref{fig:Architeture}, illustrates our proposed architecture for the case
+of RGB based handpose estimation. In this setting we use
+two encoders for RGB images and 3D keypoints respectively.
+Furthermore, the architecture contains two decoders
+for RGB images and 3D joint configurations.\par
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{Cross-modalDeepVariationalHandPoseEstimation}
+}
+
+\end{document}
