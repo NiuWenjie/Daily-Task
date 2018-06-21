@@ -102,6 +102,17 @@ can be estimated by sampling from this manifold.}
 \label{fig:Space}
 \end{figure}
 
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{Architeture.png}
+\end{center}
+   \caption{\textbf{Schematic overview of our architecture.} Left: a cross-modal latent space z is learned by training pairs of encoder
+and decoder q, p networks across multiple modalities (e.g., RGB images to 3D hand poses). Auxilliary encoder-decoder pairs
+help in regularizing the latent space. Right: The approach allows to embed input samples of one set of modalities (here:
+RGB, 3D) and to produce consistent and plausible posterior estimates in several different modalities (RGB, 2D and 3D).}
+\label{fig:Architeture}
+\end{figure*}
+
 In this work we propose to learn a single, unified latent
 space via an extension of the VAE framework. We provide a
 derivation of the variational lower bound that permits training
@@ -114,17 +125,6 @@ different combinations of modalities where the goal is to
 produce 3D hand poses as output. At the same time, the
 VAE framework naturally allows to generate samples consistently
 in any modality.\par
-
-\begin{figure*}
-\begin{center}
-   \includegraphics[width=1\linewidth]{Architeture.png}
-\end{center}
-   \caption{\textbf{Schematic overview of our architecture.}Left: a cross-modal latent space z is learned by training pairs of encoder
-and decoder q, p networks across multiple modalities (e.g., RGB images to 3D hand poses). Auxilliary encoder-decoder pairs
-help in regularizing the latent space. Right: The approach allows to embed input samples of one set of modalities (here:
-RGB, 3D) and to produce consistent and plausible posterior estimates in several different modalities (RGB, 2D and 3D).}
-\label{fig:Architeture}
-\end{figure*}
 
 We deploy the VAE framework that admits cross-modal
 training of such a hand pose latent space by using various
