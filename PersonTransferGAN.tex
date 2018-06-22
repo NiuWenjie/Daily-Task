@@ -1,0 +1,98 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Person Transfer GAN to Bridge Domain Gap for Person Re-Identification}
+
+\author{Wenjie Niu\\\\ June 22,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+Although the performance of person Re-Identification(ReID) has been significantly boosted, many challenging issues in real scenarios have not been fully investigated, e.g., the complex scenes and lighting variations, viewpoint and pose changes, and the large number of identities in a camera network. To  facilitate the research towards conquering those issues, this paper contributes a new datasets called MSMT17 with many important features, e.g., 1) the raw videos are taken by an 15-camera network deployed in both indoor and outdoor scenes, 2) the videos cover a long period of time and present complex lighting variations, and 3) it contains currentlu the largest number of annotated identities, i.e., 4,101 identities and 126,441 boundingg boxes. It is also observed that, domain gap commonly exists between datasets, which essencially causes severe perfomance drop when training and testing on different data sets. This results in that available training data cannot be effectively
+leveraged for new testing domains. To relieve the expensive
+costs of annotating new training samples, the paper propose a Person Transfer Generative Adversarial Network (PTGAN) to
+bridge the domain gap. Comprehensive experiments show
+that the domain gap could be substantially narrowed-down
+by the PTGAN.\cite{Wei_2018_CVPR}\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Person Re-Identification (ReID) targets to match and return images of a probe person from a large-scale gallery
+set collected by camera networks. Because of its important
+applications in security and surveillance, person ReID has
+been drawing lots of attention from both academia and in-
+dustry. Thanks to the development of deep learning and the
+availability of many datasets, person ReID performance has
+been significantly boosted.\par
+
+\begin{figure}[H]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Gap.png}
+\end{center}
+   \caption{Illustration of the domain gap between \emph{CUHK03} and \emph{PRID}. It is obvious that, \emph{CUHK03} and \emph{PRID} present
+different styles, \emph{e.g.}, distinct lightings, resolutions, human
+race, seasons, backgrounds, \emph{etc.}, resulting in low accuracy
+when training on \emph{CUHK03} and testing on \emph{PRID}.\cite{Wei_2018_CVPR}}
+\label{fig:Gap}
+\end{figure}
+
+Although the performance on current person ReID
+datasets is pleasing, there still remain several open issues hindering the applications of person ReID. First, existing
+public datasets differ from the data collected in real sce-
+narios. For example, current datasets either contain limited
+number of identities or are taken under constrained environ-
+ments. The currently largest DukeMTMC-ReID~\cite{Zheng2017Unlabeled} con-
+tains less than 2,000 identities and presents simple lighting
+conditions. Those limitations simplify the person ReID task
+and help to achieve high accuracy. In real scenarios, per-
+son ReID is commonly executed within a camera network
+deployed in both indoor and outdoor scenes and processes
+videos taken by a long period of time. Accordingly, real
+applications have to cope with challenges like a large num-
+ber of identities and complex lighting and scene variations,
+which current algorithms might fail to address.\par
+Another challenge we observe is that, there exists do-
+main gap between different person ReID datasets, \emph{i.e.}, train-
+ing and testing on different person ReID datasets results in
+severe performance drop. For example, the model trained
+on CUHK03~\cite{W2014Deep} only achieves the Rank-1 accuracy of
+2.0\% when tested on PRID~\cite{Hirzer2011Person}. As shown in Fig.~\ref{fig:Gap}, the
+domain gap could be caused by many reasons like different
+lighting conditions, resolutions, human race, seasons, back-
+grounds, \emph{etc}. This challenge also hinders the applications of person ReID, because available training samples cannot
+be effectively leveraged for new testing domains. Since an-
+notating person ID labels is expensive, research efforts are
+desired to narrow-down or eliminate the domain gap.\par
+
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{PersonTransferGAN}
+}
+
+\end{document}
