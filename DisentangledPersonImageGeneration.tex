@@ -1,0 +1,62 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Disentangled Person Image Generation}
+
+\author{Wenjie Niu\\\\ June 24,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+In fact, generating novel, realistic images of person is a complex challenging due to different image factors, such as the foreground, background and pose information. The paper aims at generating such iamges based on a novel, two-stage reconstruction pipeline that learns a disentangled representation of the aforementioned image factors and generates novel person images at the same time. First, a multi-branched reconstruction network is proposed to disentangle and encode the three factors into embedding features, which are then combined to recompose the input image itself. Second, three corresponding mapping functions are learned in an adversarial manner in order to map Gaussian noise to the learned embedding feature space, for each factor, respectively. Using the proposed framework, we can manipulate the foreground,
+background and pose of the input image, and also sample new embedding features to generate such targeted
+manipulations, that provide more control over the generation process. Experiments on the Market-1501 and Deepfashion datasets show that our model does not only generate realistic person images with new foregrounds, backgrounds and poses, but also manipulates the generated factors and interpolates the in-between states. Another set of experiments on Market-1501 shows that our model can also be beneficial for the person re-identification task.~\cite{Ma_2018_CVPR}
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Sample.png}
+\end{center}
+   \caption{Left: image sampling results on Market-1501.
+Three factors, \emph{i.e.} foreground, background and pose, can be
+sampled independently (1st-3rd rows) and jointly (4th row).
+Right: similar joint sampling results on DeepFashion.This
+dataset contains almost no background, so we only disentangle
+the image into appearance and pose factors.~\cite{Ma_2018_CVPR}}
+\label{fig:Sample}
+\end{figure}
+
+The process of generating realistic-looking images of persons has several applications, like image editing, person re-identification (re-ID), inpainting or on-demand generated art for movie production. The recent advent of image generation models, such as variational autoencoders (VAE)~\cite{Goodfellow2013Auto}, generative adversarial networks (GANs)~\cite{Goodfellow2014Generative} and autoregressive models (ARMs) (\emph{e.g.} PixelRNN~\cite{Oord2016Pixel}), has provided powerful tools towards this goal. Several papers~\cite{Radford2015Unsupervised},\cite{Chen2016InfoGAN},\cite{Martin_2017_ICLR} have then exploited the ability of these networks to generate sharp images in order to synthesize realistic photos of faces and natural scenes. Recently, Ma \emph{et al.}~\cite{Ma2017Pose} proposed an architecture to synthesize novel person images in arbitrary poses given as input an image of that person and a new pose. From an application perspective however, the user often wants to have more control over the generated images (\emph{e.g.} change the background, a person’s appearance and clothing, or the viewpoint), which is something that existing methods are essentially uncapable of. We go beyond these constraints and investigate how to generate novel person images with a specific user intention in mind (\emph{i.e.} foreground (FG), background (BG), pose manipulation). The key idea is to explicitly guide the generation process by an appropriate representation of that intention. Fig.~\ref{fig:Sample} gives examples of the intended generated images.
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{DisentangledPersonImageGeneration}
+}
+
+\end{document}
