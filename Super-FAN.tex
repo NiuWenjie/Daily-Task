@@ -1,0 +1,103 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Super-FAN: Integrated facial landmark localization and super-resolution of real-world low resolution faces in arbitrary poses with GANs}
+
+\author{Wenjie Niu\\\\ June 26,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{Examples.png}
+\end{center}
+   \caption{A few examples of visual results produced by our system on real-world low resolution faces from WiderFace.\cite{Bulat_2018_CVPR}}
+\label{fig:Sample}
+\end{figure*}
+
+ \begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{VisualResults.png}
+\end{center}
+   \caption{Visual results on LS3D-W.\cite{Bulat_2018_CVPR}}
+\label{fig:Results}
+\end{figure*}
+
+\begin{abstract}
+As is known in the paper, the two goals are: improving the quality of low resolution facial images and accurately locating the facial landmark. 5 main contributions are made here:
+\begin{enumerate}
+\item Authors propose Super-FAN.
+\item They illustrate the benefit of training the two networks jointly.
+\item They inprove upon the state-of-the-art in face super-resolution by proposing a new residual-based architecture. 
+\item Face super-resolution and alignment get great improvement over state-of-the-art.
+\item On real-world low-resolution images like ones of Fig.~\ref{fig:Sample}, good results is the first time shown.
+\end{enumerate}
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+The paper aims at improving the quality and understanding of very low resolution facial images. In terms of quality, the aim is to increase the resolution and recover the detalis of real-world low resolution facial images as Fig.~\ref{fig:Sample}. In terms of understanding,  they wish to extact mid-and high-level facial information by localizing a set of predefined facial landmarks with semantic meaning.\par
+
+\section{Closely related work} 
+This section reviews related work in image and facial super-resolution, and facial landmark localization.\par
+\textbf{Image super-resolution.} Early attempts on super-resolution using CNNs~\cite{Dong2016Image},\cite{Jiwon_2015_Accurate} used standard $L_p$ losses for training which result in blurry super-resolved images. To alleviate this, rather than using an MSE over pixels (between the super-resolved and the ground truth HR image), the authors of~\cite{Justin_2016_Perceptual} proposed an MSE over feature maps, coined perceptual loss.\par
+\textbf{Face super-resolution.} The recent work of~\cite{Yu_2016_Ultra} uses a GAN-based approach (like the one of~\cite{Christian_2016_Photo} without the perceptual loss) to super-resolve very low-resolution faces.\par
+\textbf{Face alignment.} A recent evaluation of face alignment~\cite{Bulat2017How} has shown that when resolution drops down to 30 pixels, the performance drop of a state-of-the-art network trained on standard facial resolution (192 $\times$ 192) for medium and large poses is more than 15\% and 30\%, respectively.\par
+
+\section{Conclusions}
+The paper proposed Super-FAN: the very first end-to-end system for integrated facial super-resolution and landmark localization. The method incorporates facial structural information in a newly proposed architecture for superresolution, via integrating a sub-network for face alignment and optimizing a novel heatmap loss.
+
+
+\begin{table}
+\begin{center}
+\caption{AUC across pose (calculated for a threshold of
+10\%; see~\cite{Bulat2017How}) on our LS3D-W balanced test set. The results,
+in this case, are indicative of visual quality. See Fig.~\ref{fig:Results}}
+\begin{tabular}{cccc}
+\toprule
+Method & [0-30] & [30-60] & [60-90] \\
+\midrule
+FAN-bilinear & 10.7\% & 6.9\% & 2.3\% \\
+FAN-SR-ResNet & 48.9\% & 38.9\% & 21.4\% \\
+FAN-SR-GAN & 47.1\% & 36.5\% & 19.6\%  \\
+Retrained FAN-bilinear & 55.9\% & 49.2\% & 37.8\% \\
+FAN-Ours-pixel & 52.3\% & 45.3\% & 28.3\% \\
+FAN-Ours-pixel-feature & 57.0\% & 50.2\% & 34.9\% \\
+Super-FAN & 67.0\% & 63.0\% & 52.5\% \\
+FAN-HR images & 75.3\% & 72.7\% & 68.2\% \\ 
+\bottomrule
+\end{tabular}
+\label{Tab:Experiment}
+\end{center}
+\end{table}
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{Super-FAN}
+}
+
+\end{document}
