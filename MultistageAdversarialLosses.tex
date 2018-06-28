@@ -1,0 +1,88 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Multistage Adversarial Losses for Pose-Based Human Image Synthesis}
+
+\author{Wenjie Niu\\\\ June 28,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+The paper proposed a pose-based human image synthesis method which can keep the human posture unchanged in novel viewpoints. And they adopt multistage adversarial losses seperately for the foreground and background generation, which fully exploits the multi-modal characteristics of generative loss to generate more realistic looking images.\par
+\end{abstract}
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{Pipeline.png}
+\end{center}
+   \caption{The overall pipeline of our multistage approach which contains three transformer networks for three stages. In the first stage, the pose transformer network synthesizes a novel view 2D pose. Then, the foreground transformer network synthesizes the target foreground image in the second stage. Finally, the background transformer network generates the target image. $f_{HG}$ and $ f_{VRF}$ donate the stacked hourglass networks~\cite{Newell2016Stacked} and the CRF-RNN~\cite{Zheng2016Conditional} for pose estimation from image and foreground segmentation, respectively.\cite{Si_2018_CVPR}}
+\label{fig:Pipeline}
+\end{figure*}
+
+\begin{figure}[H]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Synthesis.png}
+\end{center}
+   \caption{Human image synthesis by our proposed method and three state-of-the-art methods: cGANs~\cite{MirzaO14}, VSA~\cite{Ruben_2017_Lea}, PG2~\cite{MaJSSTG17}.~\cite{Si_2018_CVPR}}
+\label{fig:Synthesis}
+\end{figure}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+The method(shown in Fig.~\ref{fig:Pipeline}) keeps human posture unchanged during generating novel view images from a single image. Fig.~\ref{fig:Pipeline} shows a procedure of human image synthesis, which contains three thansformer networks for three stages. (1) In the first stage, the paper propose a pose transformer network which can synthesis 2D target pose $P_t^*$ of other perspectives from the condition pose $P_s$ corresponding to the condition image $I_s$. (2) In the second stage, the authors extract human transformer network to synthesis the target human foreground $F_s$ from condition image with the segmentation method CFR-RNN~\cite{Zheng2016Conditional}. (3) In the third stage, a bachground transformer network is proposed to generated target full image $I_t^*$ with the condition image $I_s$ and the generated foreground image $F_t^*$ as the input.\par
+Fig.~\ref{fig:Synthesis} shows the comparision results between the method and three state-of-the-art approches~\cite{MirzaO14},\cite{Ruben_2017_Lea},\cite{MaJSSTG17}. The image show much better foreground and bach ground images than the other methods.\par
+
+\section{Conclusions}
+As can be seen, in this paper it focus on human image
+synthesis and do not apply the results on other visual
+tasks. They will further improve the image quality
+and apply the generated images on various visual tasks,
+\emph{e.g.}cross-view gait recognition and person re-identification.\par
+
+\begin{table}
+\begin{center}
+\caption{The comparison results between our method and the other state-of-the-art methods.\cite{Si_2018_CVPR}}
+\begin{tabular}{ccc}
+\toprule
+Methods & SSIM & PSNR \\
+\midrule
+Mirza\emph{et al.}~\cite{MirzaO14}(cGANs) & 0.52 & 17.05 \\
+Villegas\emph{et al.}~\cite{Ruben_2017_Lea}(VSA) & 0.54 & 17.52 \\
+Ma\emph{et al.}~\cite{MaJSSTG17}(PG2) & 0.60 & 19.19 \\
+Ours & 0.72 & 20.62 \\
+\bottomrule
+\end{tabular}
+\label{Tab:Experiment}
+\end{center}
+\end{table}
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{MultistageAdversarialLosses}
+}
+
+\end{document}
