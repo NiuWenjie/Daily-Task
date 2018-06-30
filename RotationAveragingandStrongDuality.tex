@@ -1,0 +1,77 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Rotation Averaging and Strong Duality}
+
+\author{Wenjie Niu\\\\ June 30,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+The authors explore the role of duality principles
+within the problem of rotation averaging, a fundamental
+task in a wide range of computer vision applications. In its conventional form, rotation averaging is stated as a minimization over multiple rotation constraints. As these constraints are non-convex, this problem is generally considered challenging to solve globally.\par
+\end{abstract}
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Solutions.png}
+\end{center}
+   \caption{In many structure from motion pipelines, camera
+orientations are estimated with rotation averaging followed
+by recovery of camera centres (red) and 3D structure
+(blue). Here are three solutions corresponding to different
+local minima of the same rotation averaging problem.\cite{Eriksson_2018_CVPR}}
+\label{fig:Solutions}
+\end{figure}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Rotation averaging appears as a subproblem in many
+important applications in computer vision, robotics, sensor
+networks and related areas. Given a number of relative
+rotation estimates between pairs of poses, the goal is to
+compute absolute camera orientations with respect to some
+common coordinate system. In computer vision, for instance,
+non-sequential structure from motion systems such
+as~\cite{Martinec2007Robust},\cite{Enqvist2011Non} rely on rotation averaging to initialize bundle
+adjustment. The overall idea is to consider as much data as
+possible in each step to avoid suboptimal reconstructions.
+In the context of rotation averaging this amounts to using as
+many camera pairs as possible.\par
+Indeed, both $L_1$ and $L_2$ formulations of rotation averaging
+can have local minima, see Fig.~\ref{fig:Solutions}. Wilson \emph{et al.}~\cite{Wilson_2016_wh} studied
+local convexity of the problem and showed that instances
+with large loosely connected graphs are hard to solve with
+local, iterative optimization methods.\par
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{RotationAveragingandStrongDuality}
+}
+
+\end{document}
