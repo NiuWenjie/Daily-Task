@@ -1,0 +1,67 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Hybrid Camera Pose Estimation}
+
+\author{Wenjie Niu\\\\ July 2rd,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+This paper aims to solve the pose estimation problem of calibrated pinhole and generalized cameras w.r.t. a Structure-from-Motion (SfM) model by leveraging both 2D-3D correspondences as well as 2D-2D correspondences. While traditional approaches either focus on the use of 2D-3D matches, known as structure-based pose estimation or solely on 2D-2D matches (structure-less pose estimation).
+\end{abstract}
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Visualization.png}
+\end{center}
+   \caption{Visualization of 2D-2D matches (pink) and 2D-3D
+matches (blue) used by one of our hybrid pose solvers. The query
+camera is represented in red and SfM cameras in green.\cite{Camposeco_2018_CVPR}}
+\label{fig:Visualization}
+\end{figure}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Camera pose estimation, \emph{i.e.}, estimating the position and orientation of a given image, is a central step in 3D computer vision approaches such as SfM~\cite{Sameer_2009_ICCV}, Simultaneous Localization and Mapping (SLAM)~\cite{Davison2007MonoSLAM}, and visual localization~\cite{Camposeco2017Toroidal}. In addition, camera pose estimation plays an important role in applications such as selfdriving cars~\cite{HANE201714} and augmented reality~\cite{Middelberg2014Scalable}.\par
+The availability of both structure-based and structureless camera pose estimation techniques leads to a set of interesting questions: Are they mutually exclusive, \emph{i.e.}, is one always preferable over the other, or is there value in using both 2D-3D and 2D-2D matches for pose estimation? Is it best to use ”pure” solvers, \emph{i.e.}, solvers that use either 2D-3D or 2D-2D correspondences, or do hybrid solvers (\emph{c.f.}  Fig.~\ref{fig:Visualization}) using both type of matches improve pose estimation performance? Should one decide prior to RANSAC which solver to use, or is it best to select solvers in a data-driven way during RANSAC-based pose estimation?\par
+
+\section{Hybrid RANSAC for Pose Estimation}
+RANSAC variant stops when at least one solver
+$s$ has been chosen $K_s$ times, as this means that a good solution
+for the current inlier ratios has been found with probability
+$P$.
+
+\section{Conclusions}
+This paper have posed the question whether camera pose estimation can be improved by using both 2D-2D and 2D-3D matches. To answer this, we have developed a novel framework for camera pose estimation that jointly uses different minimal solvers within a new Hybrid RANSAC scheme.\par
+\textbf{Acknowledgements.} This research was funded by Google.\par
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{HybridCameraPoseEstimation}
+}
+
+\end{document}
