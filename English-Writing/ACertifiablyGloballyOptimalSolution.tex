@@ -1,0 +1,71 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{A Certifiably Globally Optimal Solution
+to the Non-Minimal Relative Pose Problem}
+
+\author{Wenjie Niu\\\\ July 4sd,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+The paper formulate the problem that finding the relative pose between two calibrated views ranks among the most funfamental geometric vision as a Quadratically Constrained Quadratic Program(QCQP), which can be converted into a  Semidefinite Program(SDP) using Shor's convex relaxation.\par
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+Relative pose estimation from corresponding point pairs between two calibrated views constitutes a fundamental geometric building block in most sparse structure-frommotion and visual SLAM algorithms. In structure from motion, it helps to initialize both topology and initial values of the view-graph, which will then be used in transformation averaging schemes~\cite{Hartley2013Rotation} as well as bundle adjustment to obtain the joint solution over all poses and points. More specifically, using an image matching technique~\cite{Nister2006Scalable}, authors establish a hypothetical covisibility graph between neighbouring pairs of views, which are then verified geometrically using robust relative pose computation. In visual SLAM~\cite{Mur2015ORB}, the algorithm is used to bootstrap the computation and thus solve the chicken-and-egg problem behind the mutually depending tracking and mapping modules.
+
+\section{Preliminaries}
+The work will follow similar notation and assumptions to those used by Kneip and Lynen in~\cite{Kneip2014Direct}. Specifically, they consider the central calibrated relative pose case, where each image feature can be translated into a unique unit bearing vector. Paie-wise correspondences thus consist of pairs of bearing vectors $(f_i, f_i^{'})$ pointing to the same 3D world point $p_i$ from the first and second camera centers.\par
+The variables of interest in the problem are the translation $t$ and relative orientation $R$ of the second camera frame w.r.t. that of the first camera. All the variables involved are illustrated in Fig.~\ref{fig:Problen}. The normalized direction $t$ will be identified with points in the 2-sphere $S^2$. The 3D rotation
+will be featured as 3 $ \times $ 3 orthogonal matrix with positive determinant belonging to the Special Orthogonal group SO(3). Symmetric $n$ $ \times $ $n$ matrices are denoted by $Sym_n$ , the subindex + standing for positive semidefiniteness.\par
+Lastly, for convenience we will often refer to the list of elements in a matrix as a vector (lowercase) stacking the columns into a vector, \emph{e.g.} $r$ = vec($R$) or $x$ = vec($X$).\par
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{TheRelativePoseProblem.png}
+\end{center}
+   \caption{The relative pose problem. The measurements are given
+by correspondence pairs of unit bearing vectors $(f_i, f_i^{'})$, and the
+unknown variables are given by the relative orientation $R$ and the
+direction of the relative translation $t$.\cite{Briales_2018_CVPR}}
+\label{fig:Problen}
+\end{figure}
+
+\section{Real data}
+For the evaluation on real data, the paper took pairs of overlapping images from the TUM benchmark sequence~\cite{Sturm2012A}, which provides both accurate ground-truth camera poses as well as the intrinsic camera calibration. They extract and match SURF features in the images, filtering outliers by thresholding on the reprojection error of triangulated correspondences. Finally, they run the same algorithms as in the previous section. The results, which are displayed in the \emph{supplementary material} due to space limitations, are consistent with the conclusions reached in the synthetic case. In particular, their proposed approach continued to find and certify the globally optimal solution.\par
+
+\section{Conclusions}
+This work solves a previously unsatisfyingly solved geometric problem of fundamental interest: Direct and optimal computation of the relative pose between two calibrated images over an arbitrary number of correspondences.
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{ACertifiablyGloballyOptimalSolution}
+}
+
+\end{document}
