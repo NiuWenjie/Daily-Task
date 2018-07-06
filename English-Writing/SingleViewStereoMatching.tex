@@ -56,9 +56,10 @@ Authors take a novel perspective and show for the first time that monocular dept
 
 \section{Analysis and Approach}
 The whole pipeline is shown in figure.~\ref{fig:Detail}. By tracking this problem using two seperate steps, the paper find that both procedures obey primary geometric principles and they can trained without expensive data supply. In order to better utilize the geometric relation between two views, the paper take the idea if 1D correlation employed in DispNetC~\cite{Mayer_2016_CVPR}. The further adopt the DispFullNet structure mentioned in~\cite{Pang2017Cascade} to achieve full resolution prediction.\par
-Their view synthesis network is shown in the upper part of figure.~\ref{fig:Detail}. This network is develoed based on Deep3D~[37] model.The operation of selection is the core component in this network. This model is also illustrated in figure.~\ref{fig:Detail}. Denote $I_l$ as the input left image, previous Depth Image-Based Rendering (DIBR) techniques choose to directly warp the left image based on estimated disparity into a corresponding right image. Suppose $D$ is the predicted disparity aligned with the left image, the procedure can be formulate as
+Their view synthesis network is shown in the upper part of figure.~\ref{fig:Detail}. This network is develoed based on Deep3D~[37] model.The operation of selection is the core component in this network. This model is also illustrated in figure.~\ref{fig:Detail}. Denote $I_l$ as the input left image, previous Depth Image-Based Rendering (DIBR) techniques choose to directly warp the left image based on estimated disparity into a corresponding right image. Suppose $D$ is the predicted disparity aligned with the left image, the procedure can be formulate as Eq:~\ref{Eq:i}
 \begin{equation}
 \tilde{I_r}(i,j-D_{i,j})=I_l(i,j),\quad (i,j)\in\omega_l
+\label{Eq:i}
 \end{equation}
 where $\omega_l$ is the image space of $I_l$ and $i$, $j$ refer to the row and column on $I_l$ respectively.\par
 
