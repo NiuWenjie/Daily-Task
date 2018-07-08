@@ -1,0 +1,91 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Fight ill-posedness with ill-posedness: Single-shot variational depth super-resolution from shading}
+
+\author{Wenjie Niu\\\\ July 8,2018}
+
+\maketitle
+%\thispagestyle{empty}
+
+
+%%%A%%%%%% ABSTRACT
+\begin{abstract}
+The paper put forward a principled variational approach for up-sampling a single depth map to the resolution of the companion color image provided by an RGB-D sensor. They combined heterogeneous depth and color data in order to jointly solve the ill-posed depth super-resolution and shape-from-shading problem. The low-frequency geometric information necessary to disambiguate shape-from-shading is extracted from the low-resolution depth measurements and, symmetrically, the high-resolution photometric clues in the RGB image provided the-frequency information required to disambiguate depth super-resolution.    
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+RGB-D senesors have become very popular for 3D-reconstruction, in view of their low cost and ease of use. They delivery a colored point cloud in a single shot, but the resulting shape often misses thin geometric structures. This is due to noise, quantisation and, more importantly, the coarse resolution of the depth map. However, super-resolution of a solitary depth map without additional constraints is an ill-posed problem such as figure.~\ref{fig:Single}.\par
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Single-shot.png}
+\end{center}
+   \caption{They carry out single-shot depth super-resolution for commodity RGB-D sensors, using shape-from-shading. By combining low-resolution depth (left) and highresolution color clues (middle), detail-preserving superresolution is achieved (right). All figures best viewed in the electronic version~\cite{Haefner_2018_CVPR}.}
+\label{fig:Single}
+\end{figure}
+
+The resolution of the depth map thus remains a limiting factor in single-shot RGB-D sensing. This work aims at breaking this barrier by jointly refining and upsamping the depth map using shape-from-shading. In other words, \textbf{they fight the ill-posedness of single depth image super-resolution using shape-from-shafing, and vice-versa.}\par
+
+
+\section{Motivation and Related Work}
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Strategy-1.png}
+\end{center}
+   \caption{There exist infinitely many ways (dashed lines) to interpolate between low-resolution depth samples (rectangles). Our disambiguation strategy builds upon shape-fromshading applied to the companion high-resolution color image (\emph{cf.} Figure~\ref{fig:Concave}), in order to resurrect the fine-scale geometric details of the genuine surface (solid line).~\cite{Haefner_2018_CVPR}.}
+\label{fig:Strategy}
+\end{figure}
+
+Due to hardware constraints, the depth observation $z_0$ are limited by the resolution of the sensor(\emph{i.e.}, the number of pixels in $\Omega_{HR}$). The single depth image super-resolution problem consists in estimating high-resolution depth map: $z$ : $\Omega_{HR} \rightarrow R$ over a larger domain $\Omega_{HR} \supset \Omega_{LR}$, which coincides with the low-resolution observations $z_0$ over $\Omega$ once it is downsampled. Following~\cite{Elad1997Restoration}, this can be formally written as
+\begin{equation}
+z_0 = K_z + \eta_z
+\label{Eq:1}
+\end{equation}\par
+In Eq.~\ref{Eq:1}, $K : R^{\Omega_{HR}}\rightarrow R^{\Omega_{LR}}$ is a linear operator combining warping, blurring and downsampling~\cite{Strekalovskiy2014Real}. It can be calibrated beforhand, hence assumed to be knuwn, see for instance~\cite{Park2011High}. As for $\eta_z$, it stands for the realisation of some stochastic process representing measurement errors, quantisation, \emph{etc}.
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Concave.png}
+\end{center}
+   \caption{Shape-from-shading suffers from the concave /
+convex ambiguity: the genuine surface (solid line) and both
+the surfaces depicted by dashed lines produce the same image,
+if lit and viewed from above. We put forward lowresolution
+depth clues (\emph{cf.} Figure~\ref{fig:Strategy}) for disambiguation.~\cite{Haefner_2018_CVPR}.}
+\label{fig:Concave}
+\end{figure}
+
+
+\section{Conclusions}
+Today I start reading the paper of \emph{Fight ill-posedness with ill-posedness: Single-shot variational depth super-resolution from shading}. The paper will be seperated by several part to be understand. This is the first part.
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{Fightill-posednesswithill-posedness}
+}
+
+\end{document}
