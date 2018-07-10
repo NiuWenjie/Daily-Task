@@ -1,0 +1,84 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Fight ill-posedness with ill-posedness: Single-shot variational depth super-resolution from shading}
+
+\author{Wenjie Niu\\\\ July 8,2018}
+
+\maketitle
+The day before yesterday, we display the key part of abstract, introduction and related work in the paper of \emph{Fight ill-posedness with ill-posedness: Single-shot variational depth super-resolution from shading}. Today we learn the rest of the paper including the approach, the experiment and conclusion.\par
+%%%%%%%%% BODY TEXT
+\section{A variational approach to joint depth super-resolution and shapr-from-shading}
+They formulate shading-based depth super-resolution as the joint soving of super-resolution and shape-from-shading in terms of the high-resolution depth map $z:\Omega_{HR}\rightarrow R$, given a low-resolution depth map $z_0: \Omega_{LR}\rightarrow R$ and a high-resolution RGB iamge $I:\Omega_{HR}\rightarrow R^3$.\par
+They aim at recovering not only a high-resolution depth map which is consistent both with the low-resolution depth measurements and with the high-resolution color data, but also the hidden parameters of the image formation model \emph{i.e.},the reflectance $\rho$ and the lighting $l$. This can be achieved by maximizing the posterior distribution of the input data with, according to Bayes rule, is given in Eq.~\ref{Eq:1}
+\begin{equation}
+P(z,\rho,l|z_0,I)=\frac{P(z_0,I|z,\rho,l)P(z,\rho,l)}{P(z_0,I)}
+\label{Eq:1}
+\end{equation}
+where the mumerator is the product of the likelihood with the prior, and the denominator is the evidence, which can be discarded since it plays no rule in maximum a posteriori(MAP) estimation. In order to make the independency assumption as transparent as possible and to motivate the final energy we aim at minimizing, we follow in the next subsections David Mumford's approach~\cite{Or2015RGBD} to derive a variational model from the posterior distribution.\par
+They describe an algorithm for effecively solving the variational problem, which is both nonsmooth and nonconvex. In order to tackle the nonlinear dependency upon the depth and its gradient arising from shape-from-shading and minimal surface regularisation, we follow~\cite{Yvain2017AV} and introduce an auxiliary variable $\theta:=(z,\nabla z)$,then rewrite a constrained optimisation in Eq.~\ref{Eq:2}
+\begin{multline}
+\min_{\substack{\rho:\Omega_{HR}\rightarrow R^3 \\ \iota \in R^4 \\ z:\Omega_{HR}\rightarrow R \\ \theta:\Omega_{HR}\rightarrow R^3}}||(l\cdot m_\theta)\rho-I||_{\iota^2_{\Omega_{HR}}}^2+\mu||K_z-z_0||_{\iota^2_{\Omega_{HR}}}^2 \\
++\nu||dA_\theta||_{\iota^1_{\Omega_{HR}}}+\lambda||\nabla\rho||_{\iota^0_{\Omega_{HR}}} \\
+s.t.\theta=(z,\nabla z)
+\label{Eq:2}
+\end{multline}
+We then use a multi-block variant of ADMM~\cite{Boyd2011Distributed,Eckstein1992On}
+to solve Eq.~\ref{Eq:2}
+
+
+\section{Experimental Validation}
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{Syntheticdataset.png}
+\end{center}
+   \caption{Synthetic dataset used for quantitative evaluation.
+Left: low-resolution depth map. Right: high-resolution
+RGB images, rendered using three different albedo maps~\cite{Haefner_2018_CVPR}.}
+\label{fig:Synthetic}
+\end{figure}
+
+\begin{figure}[!htp]
+\begin{center}
+   \includegraphics[width=1\linewidth]{ImpactofParameter.png}
+\end{center}
+   \caption{Impact of the parameters $\mu$, $\nu$ and $\lambda$ on the accuracy of the albedo and depth estimates. Based on those experiments, we select the set of parameters $(\mu,\nu,\lambda)=(10^{-1},10^{-1},2)$ for our experiments~\cite{Haefner_2018_CVPR}.}
+\label{fig:Impact}
+\end{figure}
+
+To select an appropriate set of parameters, the paper consider a synthetic dataset(the publicly available ``Joyful Yell" 3D-shape) which we render under first-order spherical harmonics lighiting($l=[0,0,-1,0.2]^T$) with three different reflectance maps as depicted in Figure.~\ref{fig:Synthetic}. Initially, the paper chose $\mu=\frac{1}{12}$,$\nu=2$ and $\lambda=1$. Then they evaluated the impact of varying each parameter, keeping the others fixed to these values found empirically. Results are shown in Figure.~\ref{fig:Impact}.
+
+
+
+\section{Conclusions}
+A variational approach to single-shot depth super-resolution for RGB-D sensors is proposed. It fully exploits the color information in order to guide super-resolution, by resorting to the shape-from-shading technique. Low-resolution depth cues resolve the ambiguities arising in shape-from-shading and, symmetrically, high-resolution photometric clues resolve those of depth super-resolution.
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{Fightill-posednesswithill-posedness-1}
+}
+
+\end{document}
