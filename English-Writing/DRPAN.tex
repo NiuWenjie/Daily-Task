@@ -1,0 +1,79 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Discriminative Region Proposal AdversarialNetworks for High-Quality Image-to-Image Translation}
+
+\author{Wenjie Niu\\\\ July 19,2018}
+
+\maketitle
+After several days of reading the paper of Discriminative Region Proposal Adversarial Networks for High-Quality Image-to-Image Translation, I have access to the framework, structure and basic professional knowledge such as Convolutional Neural Network(CNN) and Generative Adversarial Network(GAN). However, there are some difficulties for me like the deprivation of formula in the understanding of GAN. \par
+\begin{abstract}
+In this paper, authors present Discrimitive Rigion Proposal Adversarial Network(DRPAN) for high-quality image-to-image translation. In order to reduce the artifacts and blur problems during the process of translation, they explore the patch discriminator.  It produces the score map and find the most artificial part by a sliding window. Then put the discriminitive region mask the coresponding real image to obtain a fake-mask real image. A reviser based on GANs is used to distinguish the real to fake-mask real to help improving the translation quality.
+\end{abstract}
+
+\section{Introducion}
+The procedure of image-to-image translation task is descomposed into three iterated steps. First is to generate a fake image with some local artifacts by generator. Second is to propose the most fake region from the genrated image using DRPnet as shown in figure.~\ref{fig:DRPnet}. Third is to mask real image with the discriminative region, so that DPRAN(as shown in figure.~\ref{fig:DRPAN}) can optimazed on the most fake part.\par
+There are three main contribution in this paper:
+\begin{itemize}
+\item discriminators based on patch for producing discriminative region;
+\item reviser based on GANs to provide constructive revisions for generator
+\item building a DRPAN model
+\end{itemize}
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{DRPnet.png}
+\end{center}
+   \caption{\textbf{Left}: Their Discriminative Region Proposal network (DRPnet). \textbf{Right}: Synthesized samples compared with previous works on Cityscapes validation dataset~\cite{Cordts2016The}. The regions within red window show obvious artifacts or deformation. Their method can synthesize images with clear structure and vivid details.~\cite{Wang2017Discriminative}}
+\label{fig:DRPnet}
+\end{figure*}
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{DRPAN.png}
+\end{center}
+   \caption{The overall network architecture and data flow of our proposed Discriminative Region Proposal Adversarial Network (DRPAN), which is composed of three components: a generator, a discriminator, and a reviser, and is a unified model for image-to-image translation tasks.~\cite{Wang2017Discriminative}}
+\label{fig:DRPAN}
+\end{figure*}
+
+In detail, semantic segmentation graph is put in the generator, the fake image is the output. Then the discriminator is to find and extract the discriminative region in the fake image with sliding window. The corresponding real image mask with the discriminative region producing a fake-mask real sample. Last, the sample is put in the reviser to judge the image whether fake-mask real or real image. The whole architecure is shown in figure.~\ref{fig:DRPAN}.
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{facades.png}
+\end{center}
+   \caption{The training process of DRPAN on facades dataset~\cite{Radim2013Spatial}. Left: The plotting curve shows mean value of score map on synthesized samples. Right: Step by step synthesis on different discriminative regions.~\cite{Wang2017Discriminative}}
+\label{fig:DRPAN}
+\end{figure*}
+
+\section{Conlusion}
+Thanks to the carefully reading of this paper, I learnt a lot about the procedure of GAN training, the working mechanism and concrete understanding of this paper. 
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{DRPAN}
+}
+
+\end{document}
