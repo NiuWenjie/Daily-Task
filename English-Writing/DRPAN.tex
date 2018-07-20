@@ -64,11 +64,45 @@ In detail, semantic segmentation graph is put in the generator, the fake image i
    \includegraphics[width=1\linewidth]{facades.png}
 \end{center}
    \caption{The training process of DRPAN on facades dataset~\cite{Radim2013Spatial}. Left: The plotting curve shows mean value of score map on synthesized samples. Right: Step by step synthesis on different discriminative regions.~\cite{Wang2017Discriminative}}
-\label{fig:DRPAN}
+\label{fig:Process}
 \end{figure*}
 
+
+\section{Method}
+Figure.~\ref{fig:Process} shows the process of how to improve the quality of synthesized image. With DRPAN's training, the discriminative of fake-mask real image  varies improving the quality of synthesized image and scoring higher. 
+
+\begin{figure*}
+\begin{center}
+   \includegraphics[width=1\linewidth]{PatchGAN.png}
+\end{center}
+   \caption{The output results of score map on different quality levels (fake and real) of images by a pre-trained PatchGAN. The darkest regions on score maps mean the lowest quality, indicating that patch-based discriminators can be explored for discriminative region proposal.~\cite{Wang2017Discriminative}}
+\label{fig:PatchGAN}
+\end{figure*}
+
+Figure.~\ref{fig:PatchGAN} shows the output results of score map on different quality levels(fake and real) of images by a pre-trained PatchGAN. The score maps of the fake samples are almost dark with lower score while of the real samples are brightest with highest scores.\par
+Given an input image with resolution $w_i \times w_i$, and processed by the patch discriminator to be a probability score map with size $w_s \times w_s$. Suppose we want to obtain the discriminative region at $w^* \times w^*$, the size of sliding window $w$ for score map can be calculated by
+\begin{equation}
+w=w^* \times w_s/w_i
+\end{equation}
+Then our DRPnet will find the discriminative square patch on score map with the center coordinates $(x_c,y_c)$ and length $w$, so the scale$\tau$ between the input image and output score map is
+\begin{equation}
+\tau=\frac{w_i-w^*}{w_s-w}
+\end{equation}
+The center coordinates $(x_c^*,y_c^*)$ of discriminative region will be calculated by
+\begin{equation}
+\begin{cases}
+x_c^*=\tau\times x_c,\\
+y_c^*=\tau\times y_c.
+\end{cases}
+\end{equation}
+Finally, the discriminative region d r produced by DRPnet can be expressed as
+\begin{equation}
+d_r=F_{DRPnet}(x_c^*,y_c^*,w^*)
+\end{equation}
+
+
 \section{Conlusion}
-Thanks to the carefully reading of this paper, I learnt a lot about the procedure of GAN training, the working mechanism and concrete understanding of this paper. 
+Thanks to the carefully reading of this paper, I learnt a lot about the procedure of GAN training, the working mechanism and concrete understanding of this paper. There are quite some difficulty in the understanding of the equations, I still need some time to catch.
 %-------------------------------------------------------------------------
 
 {\small
