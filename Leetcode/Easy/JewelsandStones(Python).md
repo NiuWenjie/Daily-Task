@@ -8,7 +8,7 @@ The letters in J are guaranteed distinct, and all characters in J  and S are let
 
 # 代码实现
 
-```c
+```python
 class Solution:
     def numJewelsInStones(self, J, S):
         """
