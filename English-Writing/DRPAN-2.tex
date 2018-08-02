@@ -1,0 +1,68 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Discriminative Region Proposal AdversarialNetworks for High-Quality Image-to-Image Translation}
+
+\author{Wenjie Niu\\\\ August 3, 2018}
+
+\maketitle
+This writing is also about the paper of \emph{Discriminative Region Proposal Adversarial Networks for High-Quality Image-to-Image Translation}. And this part mainly analyse the experiment, which I spent more than two days to understand what's the meaning. Therefore, the experiment part is worth considering.
+\section{Experiment}
+To evaluate the performance of proposed method on image-to-image translation tasks, they deploy a variety of experiments about different levels of translation tasks to compare our method with state-of-the-arts. And for different tasks, they also use different evaluation metrics including human perceptual studies and automatic quantitative measures.\par
+
+ \begin{figure*}
+ 	\begin{center}
+ 		\includegraphics[width=1\linewidth]{DRPAN_2_1.png}
+ 	\end{center}
+ 	\caption{The output results of score map on different quality levels (fake and real) of images by a pre-trained PatchGAN. The darkest regions on score maps mean the lowest quality, indicating that patch-based discriminators can be explored for discriminative region proposal.~\cite{Wang2017Discriminative}.}
+ 	\label{fig:DRPAN_2_1}
+ \end{figure*}
+ 
+  \begin{figure*}
+  	\begin{center}
+  		\includegraphics[width=1\linewidth]{DRPAN_2_2.png}
+  	\end{center}
+  	\caption{Different methods with various losses produce different quality of results. The second column is the start point of comparison trained by PatchD, and all other models are continued trained for 40 epochs more. These experiments validate the necessary of our DRPnet for discriminative region proposal, our reviser for optimizing generator, and our fake-mask operation for improving synthesis.~\cite{Wang2017Discriminative}.}
+  	\label{fig:DRPAN_2_2}
+  \end{figure*}
+
+  \subsection{Evaluation metrics}
+  \textbf{Image quality evaluation.} PSNR, SSIM~\cite{Wang2004Image} and VIF~\cite{Sheikh2006Image} are some of the most popular evaluation metrics in low-level computer vision tasks such as deblurring, dehazing and image restoration. So for de-raining and aerial to maps tasks, thhey adopt PSNR, SSIM, VIF and RECO~\cite{Baroncini2015The} to qualify the performance of results.\par
+ \textbf{Image segmentation evaluation metrics.} We use standard metrics from Cityscapes benchmark~\cite{Cordts2016The} to evaluate real to semantic labels task on Cityscapes dataset, including per-pixel accuracy, per-class accuracy, and Class IOU.\par
+ \textbf{Amazon Mechanical Turk (AMT).} AMT~\cite{Isola2016Image,Zhu2017Unpaired,Yi2017DualGAN} is adopted in many tasks as a gold metric to evaluate how real the synthesized images, and we use it as evaluation metric for semantic labels to photo and maps to aerial tasks.\par
+ \textbf{FCN-8s score.} The intuition of using an off-the-shelf classifiers for automatic quantitative measurement is that if the generated images are realistic, classifiers trained on real images will be able to classify the synthesized image correctly as well~\cite{Isola2016Image}. We use the FCN-8s score~\cite{Long2015Fully} to evaluate semantic labels to real task on Cityscapes dataset. The FCN-8s model trained on Cityscapes segmentation tasks is taken from~\cite{Isola2016Image}.\par
+ \subsection{Why DRPAN?}
+The PatchD is efficient to discover the most fake or real region (Fig~\ref{fig:DRPAN_2_1}) from the image but is limited to improve these regions with fine details for that PatchD is hard to capture the high dimension distribution. In this case, It's be proposed a DRPnet (explore the strength of PatchD) for discriminative region proposal and design a reviser to gradually remove visual artifacts, and thus reduce it to lower dimension estimation problem. This can be seen as a “top-down” procedure which is different from other gradually “bottom-up” image generation method~\cite{Zhang2017StackGAN}. Fig~\ref{fig:DRPAN_2_2} shows the necessity of our proposed DRPAN for high-quality image-to-image translation, which illustrates that continue training PatchD is no help to reduce artifacts even with a L1 loss for balance, and DRPAN with only L1 loss can smooth the artifacts but not very sharp in details, while DRPAN with reviser exceeds the PatchD’s performance with less visual artifacts. The combination of reviser and L1 loss can reduce these artifacts ignored by PatchD. It's be found that fake-mask operation can improve the fluency of whole image in certain samples (\emph{e.g.}, the connection between door and wall). So DRPAN with fake-mask is implemented in the following experiments.
+
+\section{Conlusion}
+Thanks to the carefully reading of this paper, I learnt a lot about the procedure of GAN training, I understand the method of the paper,which is very strange for me before. The entire procedure is complex and it worth reading and considering again and again.
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{DRPAN-2}
+}
+
+\end{document}
