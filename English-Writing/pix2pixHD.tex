@@ -1,0 +1,69 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{indentfirst}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{picinpar,graphicx}
+\usepackage[breaklinks=true,bookmarks=false,colorlinks,
+            linkcolor=red,
+            anchorcolor=blue,
+            citecolor=green,
+            backref=page]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{High-Resolution Image Synthesis and Semantic Manipulation with Conditional GANs}
+
+\author{Wenjie Niu\\\\ August 17, 2018}
+
+\maketitle
+
+ \begin{figure*}
+ 	\begin{center}
+ 		\includegraphics[width=1\linewidth]{HD1.png}
+ 	\end{center}
+ 	\caption{It propose a generative adversarial framework for synthesizing 2048 $\times$ 1024 images from semantic label maps(lower left corner in (a)). Compared to previous work~\cite{Chen2017Photographic}, the results express more natural textures and details. (b) The menthod in this paper can change labels in the original label map to create new scenes, like replacing trees with buildings. (c) The framework also allows a user to edit the appearance of individual objects in the scene, \emph{e.g.} changing the color of a car or the texture of a road.~\cite{TC2018High}}
+ 	\label{fig:HD1}
+ \end{figure*}
+
+\begin{abstract}
+	The paper present a new method for synthesizing high-resolution photo-realistic images from semantic label maps using conditional generative adversarial networks (conditional GANs). Conditional GANs have enabled a variety of applications, but the results are often limited to low-resolution and still far from realistic. In this work, it generate 2048 $\times$ 1024 visually appealing results with a novel adversarial loss, as well as new multi-scale generator and discriminator architectures.
+\end{abstract}
+
+\section{Introduction}
+In this paper, it is discussed a new approach that produces high-resolution images from semantic label maps. This method has a wide range of applications. For example, it can be used to create synthetic training data for training visual recognition algorithms, since it is much easier to create semantic labels for desired scenarios than to generate training images. Using semantic segmentation methods, it can transform images into a semantic label domain, edit the objects in the label domain, and then transform them back to the image domain. This method also gives us new tools for higher-level image editing, e.g., adding objects to images or changing the appearance of existing objects.\par
+To synthesize images from semantic labels, one can use the pix2pix method, an image-to-image translation framework~\cite{Isola2017Image} which leverages generative adversarial networks (GANs)~\cite{Goodfellow2014Generative} in a conditional setting. Recently, Chen and Koltun~\cite{Chen2017Photographic} suggest that adversarial training might be unstable and prone to failure for high-resolution image generation tasks. Instead, they adopt a modified perceptual loss~\cite{Dosovitskiy2016Generating,Gatys2016Image,Johnson2016Perceptual} to synthesize images, which are high-resolution but often lack fine details and realistic textures.\par
+
+\section{Instance-Level Image Synthesis}
+It first review our baseline model pix2pix(Sec.~\ref{I_1}). It then describe how authors increase the photorealism and resolution of the results with the improved objective function and network design. Next, it use additional instance-level object semantic information to further improve the image quality. Finally, it introduce an instance-level feature embedding scheme to better handle the multi-modal nature of image synthesis, which enables interactive object editing.
+\subsection{The pix2pix Baseline}\label{I_1}
+The pix2pix method~\cite{Isola2017Image} is a conditional GAN framework for image-to-image translation. It consists of a generator $G$ and a discriminator $D$. For this task, the objective of the generator $G$ is to translate semantic label maps to realistic-looking images, while the discriminator $D$ aims to distinguish real images from the translated ones. The framework operates in a supervised setting. In other words, the training dataset is given as a set of pairs of corresponding images $\{(s_i , x_i)\}$, where $s_i$ is a semantic label map and $x_i$ is a corresponding natural photo. Conditional GANs aim to model the conditional distribution of real images given the input semantic label maps via the following minimax game:
+\begin{equation}
+\min_G \max_D\mathcal{L}_{GAN}(G,D)
+\label{Eq:1}
+\end{equation}
+where the objective function $\mathcal{L}_{GAN}(G,D)$ is given by
+\begin{equation}
+\mathbb{E}_{(s,x)}[\log D(s, x)]+\mathbb{E}_s[\log(1-D(s, G(s))]
+\end{equation}
+The pix2pix method adopts U-Net~\cite{Ronneberger2015U} as the generator and a patch-based fully convolutional network~\cite{Shelhamer2014Fully} as the discriminator. The input to the discriminator is a channel-wise concatenation of the semantic label map and the corresponding image. However, the resolution of the generated images on Cityscapes~\cite{Cordts2016The} is up to 256 $\times$ 256. It tested directly applying the pix2pix framework to generate high-resolution images, but found the training unstable and the quality of generated images unsatisfactory.
+
+%-------------------------------------------------------------------------
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{pix2pixHD}
+}
+
+\end{document}
